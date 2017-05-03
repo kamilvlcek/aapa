@@ -8,14 +8,15 @@ ExperimentHUD.SetDestinationText(destinationVisits);
 // Initialize randomizer
 Srand(GetTime());
 
-function OnDestinationEnter(destination){
-	IncrementVisits();
+function OnDestinationEnter(destination){  // vstupy do diamanatu	
+  IncrementVisits();
 	PlayDestinationEnterSound();
+  Log("Diamant entered, total: "+destinationVisits);
 	MoveToNewPosition(destination);
 }
 
 function MoveToNewPosition(destination){
-	Log("Moving destination");
+	//Log("Moving destination");
 	var valid = false;
 	var iteration = 0;
 	
@@ -51,9 +52,10 @@ function MoveToNewPosition(destination){
 		}
 	}
 	
-	Log("New location resolved in " + iteration + " iteration");
+	//Log("New location resolved in " + iteration + " iteration");
 	
 	destination.SetLocation(x,y,86)
+  Log('Diamant moved to new position: '+x+','+y);
 }
 
 function IncrementVisits(){

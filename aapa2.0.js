@@ -14,9 +14,19 @@ var AttachedActive = false;
 ExperimentHUD.SetAvoidanceText("0:00.0");
 SetPhase(0);
 
+var destinationVisitsLast = 0; // udaje z posledni faze
+var AvoidanceTimeLast = 0;
+var AvoidanceNumberLast = 0;
 //Phasing
+function EndPhase(phase){
+   //ulozi data o predchozi faze
+   Log("Phase finished: "+phase+", Diamants: "+(destinationVisits-destinationVisitsLast) + ", Avoidance area time: "+(AvoidanceTime-AvoidanceTimeLast) + ", Avoidance entrances : "+(AvoidanceNumber - AvoidanceNumberLast));
+   destinationVisitsLast =  destinationVisits;    // ulozim posledni hodnoty
+   AvoidanceTimeLast = AvoidanceTime;
+   AvoidanceNumberLast = AvoidanceNumber;
+}
 function SetPhase(phase){
-	
+	Log("Phase started: "+phase);
 	Sounds.StopCue(1);	
 			
 	switch(phase){
