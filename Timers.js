@@ -10,16 +10,20 @@ Timer(1, function(){
 	ExperimentHUD.SetTime((TimeToGo/60 | 0) + ":" + TimeToGo%60);
 
 	switch(TimeToGo){
-		case 540:
-			SetPhase(1);
+		case 9*60:
+      EndPhase(0);    
+			SetPhase(1);   // v aapa2.0 js
 			break;
-		case 360:
+		case 6*60:
+      EndPhase(1);  
 			SetPhase(2);
 			break;
-		case 180:
+		case 3*60:
+      EndPhase(2);  
 			SetPhase(3);
 			break;
 		case 0:
+      EndPhase(3);  
 			ExperimentHUD.SetTime("End");
 			StopScript();		
 			break;
@@ -37,16 +41,14 @@ function IsAvoidanceColliding(){
 
 //Avoidance area presence counter
 var AvoidanceTime = 0;
-var CuePlaying = false;
+var AvoidanceNumber = 0;
+var CuePlaying = false;  // zvuk pri pozici v avoidance
+
+
 Timer(0.005, function(){
-	if(IsAvoidanceColliding()){
+	if(IsAvoidanceColliding()){   
 		AvoidanceTime += 0.005;
-		
-		if(!CuePlaying){
-			CuePlaying = true;
-			Sounds.PlayCue(1);
-		}
-		
+				
 		var minutes = (AvoidanceTime/60) - ((AvoidanceTime/60)%1);
 		var decimals = AvoidanceTime%1;
 		var seconds = AvoidanceTime%60 - decimals;
@@ -62,11 +64,5 @@ Timer(0.005, function(){
 		}
 				
 		ExperimentHUD.SetAvoidanceText(minutes + ":" + secondsFormatted + "." + centiseconds);
-	}
-	else{
-		if(CuePlaying){
-			Sounds.StopCue(1);
-			CuePlaying = false;
-		}
 	}
 })
