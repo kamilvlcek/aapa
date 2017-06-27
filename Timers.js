@@ -11,19 +11,19 @@ Timer(1, function(){
 
 	switch(TimeToGo){
 		case 9*60:
-      			EndPhase(0);    
+      EndPhase(0);    
 			SetPhase(1);   // v aapa2.0 js
 			break;
 		case 6*60:
-      			EndPhase(1);  
+      EndPhase(1);  
 			SetPhase(2);
 			break;
 		case 3*60:
-      			EndPhase(2);  
+      EndPhase(2);  
 			SetPhase(3);
 			break;
 		case 0:
-      			EndPhase(3);  
+      EndPhase(3);  
 			ExperimentHUD.SetTime("End");
 			StopScript();		
 			break;
@@ -48,12 +48,11 @@ var CuePlaying = false;  // zvuk pri pozici v avoidance
 Timer(0.005, function(){
 	if(IsAvoidanceColliding()){   
 		AvoidanceTime += 0.005;
-				
 		
 		if(!CuePlaying){
 			CuePlaying = true;
-      			Log('Avoidance entered');
-      			AvoidanceNumber++;
+      Log('Avoidance entered');
+      AvoidanceNumber++;
 			Sounds.PlayCue(1);
 		}
 		
@@ -77,7 +76,7 @@ Timer(0.005, function(){
 		if(CuePlaying){
 			Sounds.StopCue(1);
 			CuePlaying = false;
-      			Log('Avoidance left');
+      Log('Avoidance left');
 		}
 	}
 })
