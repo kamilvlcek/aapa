@@ -32,74 +32,51 @@ function SetPhase(phase){
 	switch(phase){
 		// Tréning (nebo fáze 0): room 0 (=sektor neotáčející se s arénou) aktivní a viditelný, - 60s 
 		case 0:
-			Sounds.StopCue(1);	
-			RedArea.SetVisibility(RedVisible = false);
-			RedActive = false;
-			RedArea.SetActive(false);
-			
-			YellowArea.SetVisibility(YellowVisible = false);
-			YellowActive = false;
-			YellowArea.SetActive(false);
-			
-			TestArea.SetVisibility(TestVisible = true);
-			TestActive = true;
-			TestArea.SetActive(true);
-			
-			AttachedArea.SetVisibility(AttachedVisible = false);
-			AttachedActvie = false;
-			AttachedArea.SetActive(false);
+			RedActive = DeactivateArea(RedArea);
+			YellowActive = DeactivateArea(YellowArea);
+			TestActive = ActivateArea(TestArea);
+			TestArea.SetVisibility(true);
+			AttachedActive = DeactivateArea(AttachedArea);
 			break;
-		// test 1: room 1 aktivní ale neviditelný,  - 3 minuty 
+			// test 1: room 1 aktivní ale neviditelný,  - 3 minuty 
 		case 1:
-			RedArea.SetVisibility(false);
-			RedActive = false;
-			RedArea.SetActive(false);
-			
-			YellowArea.SetVisibility(false);
-			YellowActive = true;
-			YellowArea.SetActive(true);
-			
-			TestArea.SetVisibility(false);
-			TestActive = false;
-			TestArea.SetActive(false);
-			
-			AttachedArea.SetVisibility(AttachedVisible = false);
-			AttachedActvie = false;
-			AttachedArea.SetActive(false);
-			
+			RedActive = DeactivateArea(RedArea);
+			YellowActive = ActivateArea(YellowArea);
+			TestActive = DeactivateArea(TestArea);
+			AttachedActive = DeactivateArea(AttachedArea);
 			break;
 		// test 2: room 2 aktivní ale neviditelný,  - 3 minuty
 		case 2:
-			RedArea.SetVisibility(false);
-			RedActive = true;
-			RedArea.SetActive(true);
-			
-			YellowActive = false;
-			YellowArea.SetVisibility(false);
-			YellowArea.SetActive(false);
-			
-			TestArea.SetVisibility(false);
-			TestActive = false;
-			TestArea.SetActive(false);
-			
-			AttachedArea.SetVisibility(false);
-			AttachedActvie = false;
-			AttachedArea.SetActive(false);
+			RedActive = ActivateArea(RedArea);
+			YellowActive = DeactivateArea(YellowArea);
+			TestActive = DeactivateArea(TestArea);
+			AttachedActive = DeactivateArea(AttachedArea);
 			break;
 		// test 3: aréna  (=sektor otáčející se s arénou) aktivní ale neviditelný,-  3 min 
 		case 3:
-			RedArea.SetVisibility(false);
-			RedArea.SetActive(false);
-			RedActive = false;
+			RedActive = DeactivateArea(RedArea);
+			YellowActive = DeactivateArea(YellowArea);
+			TestActive = DeactivateArea(TestArea);
+			AttachedActive = ActivateArea(AttachedArea);
 			AttachedArea.AttachToActor("Platform");
-			AttachedActive = true;
-			AttachedArea.SetVisibility(false);
-			AttachedArea.SetActive(true);
-			
 			break;
 		default:
 			ExperimentDebugHUD.AddDebug("Unknown phase");
 	}
+}
+
+function ActivateArea(area){
+	area.SetVisibility(false);
+	area.SetActive(true);
+	area.ActivateSound();
+	return true;
+}
+
+function DeactivateArea(area){
+	area.SetVisibility(false);
+	area.SetActive(false);
+	area.DeactivateSound();
+	return false;
 }
 
 function ToggleActiveAreaVisibility(){
